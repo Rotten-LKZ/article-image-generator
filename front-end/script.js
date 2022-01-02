@@ -82,7 +82,10 @@ preview.onclick = function (e) {
   column = columnInput;
   row = rowInput;
   text = textInput;
-  document.getElementById("previewPage").contentWindow.location.reload();
+  const previewPage = document.getElementById("previewPage");
+  previewPage.contentWindow.location.reload();
+  previewPage.setAttribute("style", `height: ${31 * parseInt(row) + 7}px`);
+
   swal("成功", "预览窗口已重新渲染", "success");
 };
 

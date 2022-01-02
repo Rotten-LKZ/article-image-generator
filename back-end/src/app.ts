@@ -22,6 +22,11 @@ app.post("/api/composition", async (request, response) => {
     return;
   }
 
+  if (isNaN(parseInt(block)) || isNaN(parseInt(column)) || isNaN(parseInt(row))) {
+    response.status(400);
+    return;
+  }
+
   fs.writeFileSync(path.resolve(__dirname, '../static', 'html', 'config.js'), 
   `const block = ${block};const column = ${column};const row = ${row};const text = "${content.replace(/\n/g, "\\n")}";const line = ${lineStr}`);
 
@@ -29,8 +34,8 @@ app.post("/api/composition", async (request, response) => {
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     defaultViewport: {
-      width: 1230,
-      height: 627
+      width: (26 * parseInt(block) + 17) * parseInt(column) + 5,
+      height: 31 * parseInt(row) + 7
     }
   });
   const page = await browser.newPage();
