@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+  <link rel="stylesheet" href="./style.css">
+  <title>答题卡作文图片生成</title>
+</head>
+<body>
+  <form class="form" id="form" autocomplete="off">
+    <div class="form-group">
+      <label for="blockInput">每行格子数</label>
+      <input type="text" class="form-control" id="blockInput" placeholder="每行格子数" value="15">
+    </div>
+    <div class="form-group">
+      <label for="rowInput">每列行数</label>
+      <input type="text" class="form-control" id="rowInput" placeholder="每列行数" value="20">
+    </div>
+    <div class="form-group">
+      <label for="columnInput">纵列数</label>
+      <input type="text" class="form-control" id="columnInput" placeholder="纵列数" value="3">
+    </div>
+    <div class="form-group">
+      <label for="content">文章主体</label>
+      <textarea class="form-control" id="content" placeholder="文章主体"></textarea>
+      <p class="help-block">第一行写标题（每段开头均不需要手动空格）</p>
+    </div>
+    <div class="form-group">
+      <label for="lineInput">线条</label>
+      <input class="form-control" id="lineInput" placeholder="线条"><br/>
+      <button type="button" class="btn btn-default" id="addLine">添加</button>
+      <button type="button" class="btn btn-default" id="viewLine">查看已添加</button>
+      <button type="button" class="btn btn-default" id="deleteAllLines">删除全部</button>
+      <p class="help-block">格式：列数 第几行下放添加横线（如果已经有的话则为删除）</p>
+    </div>
+    <div class="form-group">
+      <button type="button" class="btn btn-primary" id="generate">生成</button>
+      <button type="submit" class="btn btn-default" id="preview">预览</button>
+      <p class="help-block">按下 Enter 键默认预览图片</p>
+    </div>
+  </form>
+  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  <script src="./script.js"></script>
+  <iframe src="./com/com.html" frameborder="0" class="previewPage" id="previewPage"></iframe>
+</body>
+</html>

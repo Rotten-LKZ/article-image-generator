@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>a</title>
+  <style>
+body {
+  background-color: white;
+  margin: 0;
+}
+
+.root {
+  position: relative;
+}
+
+.column {
+  display: inline-block;
+  margin-left: 5px;
+  border: 1px solid black;
+}
+
+.row {
+  margin: 5px;
+}
+
+.block {
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 1px solid black;
+  text-align: center;
+  font-size: 18px;
+  position: relative;
+}
+
+.stopSign::after {
+  content: "、";
+}
+
+.ellipsis::after {
+  content: "…";
+}
+
+.comma::after {
+  content: "，";
+}
+
+.period::after {
+  content: "。";
+}
+
+.exMark::after {
+  content: "！";
+}
+
+.quMark::after {
+  content: "？";
+}
+
+.colon::after {
+  content: "：";
+}
+
+
+.quoLeftMark::after {
+  content: "“";
+  position: absolute;
+  right: 0;
+}
+
+.quoRightMark::after {
+  content: "”";
+  position: absolute;
+  right: -3px;
+}
+
+.seMark::after {
+  content: "；";
+}
+
+.arrived::after {
+  content: attr(data-number);
+  font-size: 6px;
+  z-index: 100;
+  position: absolute;
+  bottom: -7.5px;
+  left: 2px;
+}
+
+  </style>
+</head>
+<body>
+  <div class="root" id="root">
+  </div>
+  <script>
+    
+const block = 15;
+const column = 3;
+const row = 20;
+
+// const text = "夏天的山林\n阳光透过稀稀疏疏的树叶穿过，地板呈现出一个个光斑。蝉在鸣唱，我沉浸在这个夏天里。\n我并不像在农村成长的父母们，喜欢大自然的怀抱。小时候的我胆小怕事。无论是一只小昆虫我都怕得惶恐不安。父母却总是带我去山林里玩耍。\n途中山里树林密布，郁郁葱葱，阳光渗透下来使地板上形成一个个光斑。蝉在鸣叫，似乎在抱怨着夏天的炎热。父亲听闻它们的叫声，偶然让我试试胆儿，看看能不能用手抓住它。\n可是，我怕它们啊！\n我父亲也拿我无辙，暂且放过了我。我一溜烟地跑上了山，一路上正溪水潺潺声相伴。水势平整到湍急，再回归平整。平整的水面一缕轻轻的微风吹过就会产生涟漪；湍急的水面台风刮过仍然一股脑地向下奔去。\n蚂蚁在树下辛勤工作着，蝉也趴在树的上面歌唱。它们真会找地儿，正好在太阳的阴影下面栖息着。我和父亲并没有走修得规规整整的道路，反而走上了旁边的泥土路。路边突然有一大片种着千奇百怪的花的花丛，每走几步路都是一副新的景象。\n花丛里面蝴蝶在飞舞着，仿佛和花一起在跳芭蕾舞，花儿随着微风抖动，蝴蝶也随之飘动。蜜蜂也在花蕊处采蜜。花儿一副开心的样子就像跟蜜蜂签订了秘密的生死状，花儿将会无偿地为蜜蜂提供花蜜。\n这些景色不禁让我感到震撼到自然的千姿百态。自然界的事物大家都互相支持鼓励，才造就了这么一副欣欣向荣的景象。我身处山林之中，我也是自然界的一员，不管是趴在树上的蝉还是在地上跳跃的蚂蚱，其实都是我的朋友，谁会怕自己的朋友呢？\n虽然我依旧受不了昆虫的脏，怕它突然跳脱出我的手掌心扒到我脸上。但是相比以前，我已经好了不少。\n这件事影响了我许多。从今往后，人生遇到的困难，倘若换一个角度看的话，把它们当作好朋友一样，便会迎刃而解。人这一生就像路边上的河流，平静的等候着只能被风吹，被动地进行着微乎其微的改变。唯有当自己主动地飞跃有落差的石头，才能不畏风吹，按照自己的计划来走得更远。\n夏天的山林还是阳光洒在地板的光斑，蝉依然以歌唱欢迎盛夏的到来。我却不像过往，如此担惊受怕。";
+const text = "换来一个春天\n冬去春来，人生中总有不喜欢的冬天，喜欢的春天。换个角度看冬天，迎来的是一个春天。\n在北方老家的冬天里，总是寒冷而又大雪纷飞。父母却每次过年总执意要回到老家。我受不了总是上门打扰的亲戚，早上起床离开被窝的冰冷、简陋的屋内设施以及下雪后难以行走的路面。\n我实在无法忍受老家的种种不便了。\n今年也不例外，我和父母回到了家乡。时不时门口传来亲切而又烦人的几句：“你们回来了啊，我来拜访你们了嘞。”“哎呀，你家孩子长这么大了！”令我实在无法适从，我只好出去走走避避风头。\n我不喜欢冬天，因为它带给我的是冰冷的雪和难走的地。恰好，我路过一个庭院门敞开的院子，我好奇地向里走，做坏事似向里面投入好奇的眼光。一把藤椅上面坐着一个老头子，他舒张安详的脸朝着温柔的阳光，旁边有一个伸长着脖子帮忙转述信息的收音机，里面几首歌在来回放，藤椅晃动传来了吱吱声。\n或许，我进来时一不小心发出了动静，再或者是他感受到来自门口的阳光少了一分。他向我这儿看来了。我尴尬地问：“为什么不在暖炉旁烤火？偏要如此受冻？”“哈哈，我在享受这暖阳。人也要‘冬眠’。但‘冬眠’却不是待在酷热似盛夏的环境‘冬眠’，而是自然的‘冬眠’。”我实在听不惯这样的大道理，转身不了了之地走了。\n我又走了一段，看到一片满是雪的空地上一群小朋友满面春光乐此不疲地玩雪，我一脸吃惊。但看看孩子们自在轻盈地脚步，听着他们“哇！”“看招！”叫着，我看向他们，他们看到我时，问：“大哥哥要不要陪我们一块玩儿啊？可好玩了！”我呆住了，难道雪真的这么吸引人吗？有魔法般地神奇功力吗？\n冬去春来，忍过了一个冬天，换来的是一个春天。但其实我转念一想，像老人的“冬眠”、孩子的“魔法雪”，只要用另一个角度看冬天，那么冬天也会被置换成春天。\n新角度看待讨厌的冬天，原本喜欢的春天，将他们融合起来，换来的是更加温暖，充满春意、盎然的春天。";
+// const text = "测试\n我说：“这只是一段仅供测试用的句子。”";
+
+var root = document.querySelector("#root");
+var renderParas = []; // 处理后每一行要进行渲染的文本 取到 undefined 自动替换成空格 格式{"extra": "Class Name", "text": "text"}
+
+// #region 处理文本
+const paras = text.split("\n");
+
+// 标题
+var titleSpaceNum = parseInt((block - paras[0].length) / 2);
+var title = "";
+for (let i = 0;i < titleSpaceNum;i++) {
+  title += " ";
+}
+title += paras[0];
+renderParas.push({"extra": getExtraText(), "text": title});
+
+// 文章主体
+for (let i = 1;i < paras.length;i++) {
+  let characters = paras[i].split("");
+  let del = [];
+
+  characters.unshift(" ", " ");
+  for (let j = 0;j < characters.length;j++) {
+    // 引号判断
+    if (characters[j] === "“" && isLeftPunctuation(characters[j - 1])) {
+      characters[j - 1] += "“";
+      del.push(j);
+      continue;
+    } else if (characters[j] === "”" && isRightPunctuation(characters[j - 1])) {
+      characters[j - 1] += "”";
+      del.push(j);
+      continue;
+    }
+
+    // 避头尾处理
+    if ((j + 1) % block === 1 && isPunctuation(characters[j])) {
+      characters[j - 1] += characters[j];
+      del.push(j);
+    }
+
+    //TODO: 引号结尾
+  }
+
+  for (let j = 0;j < del.length;j++) {
+    characters.splice(del[j] - j, 1);
+  }
+
+  var extraText = {};
+  var rowText = "";
+  for (let j = 0;j < characters.length;j++) {
+    if (characters[j].length === 2) {
+      extraText[j % block] = getPunctuationName(characters[j].substr(1, 1));
+      characters[j] = characters[j].substr(0, 1);
+    } else {
+      extraText[j % block] = "";
+    }
+    rowText += characters[j];
+
+    if ((j + 1) % block === 0) {
+      renderParas.push({"extra": extraText, "text": rowText});
+      extraText = {};
+      rowText = "";
+    }
+  }
+  renderParas.push({"extra": extraText, "text": rowText});
+}
+
+// 洗掉空行
+var _renderParas = [];
+for (let i = 0;i < renderParas.length;i++) {
+  if (renderParas[i].text.replace(" ", "") !== "") {
+    _renderParas.push(renderParas[i]);
+  }
+}
+renderParas = _renderParas;
+
+function isLeftPunctuation(str) {
+  var punctuations = {
+    "，": "comma",
+    "：": "colon",
+  }
+
+  return punctuations[str] === undefined ? false : true;
+}
+
+function isRightPunctuation(str) {
+  var punctuations = {
+    "……":"ellipsis",
+    "。": "period",
+    "！": "exmark",
+    "？": "qumark",
+  }
+
+  return punctuations[str] === undefined ? false : true;
+}
+
+function getPunctuationName(str) {
+  var punctuations = {
+    "、": "stopSign",
+    "……":"ellipsis",
+    "，": "comma",
+    "。": "period",
+    "！": "exMark",
+    "？": "quMark",
+    "：": "colon",
+    "；": "seMark",
+    "“": "quoLeftMark",
+    "”": "quoRightMark",
+  }
+
+  return punctuations[str] === undefined ? "" : punctuations[str];
+}
+
+/**
+ * 
+ * @param {String} str 
+ * @returns boolean
+ */
+function isPunctuation(str) {
+  var punctuations = ["、", "……", "，", "。", "！", "？", "：", "；"];
+  for (let i = 0;i < punctuations.length;i++) {
+    if (str.includes(punctuations[i])) {
+      return true;
+    }
+  }
+}
+
+function getExtraText(...con) {
+  var extra = {};
+  for (let i = 0;i < con.length;i++) {
+    extra[con[i][0]] = con[i][1];
+  }
+  for (let i = 0;i < block;i++) {
+    if (extra[i] === undefined) {
+      extra[i] = "";
+    }
+  }
+  return extra;
+}
+
+// #endregion
+
+// #region 渲染到页面
+var columnIns = "";
+var blocksRendered = 0;
+for (let i = 0;i < column;i++) {
+  columnIns += `<div class="column">${rowInsRender(i)}</div>`;
+}
+
+function rowInsRender(column) {
+  var rowIns = "";
+  for (let i = 0;i < row;i++) {
+    rowIns += `<div class="row">${blocksInsRender(i + column * row)}</div>`;
+  }
+  return rowIns;
+}
+
+function blocksInsRender(para) {
+  var blockIns = "";
+  for (let i = 0;i < block;i++) {
+    blocksRendered += 1;
+    var con = renderParas[para];
+    if (con === undefined) {
+      if (blocksRendered % 100 === 0) {
+        blockIns += `<div class="block arrived" id="arrived${blocksRendered / 100}"> </div>`
+      } else {
+        blockIns += `<div class="block"> </div>`
+      }
+    } else {
+      if (blocksRendered % 100 === 0) {
+        blockIns += `<div class="block ${con.extra[i]} arrived" id="arrived${blocksRendered / 100}">${con.text[i] === undefined ? " " : con.text[i]}</div>`
+      } else {
+        blockIns += `<div class="block ${con.extra[i]}">${con.text[i] === undefined ? " " : con.text[i]}</div>`
+      }
+    }
+  }
+  return blockIns;
+}
+
+// #endregion
+
+root.innerHTML += columnIns;
+
+// 几百字提示
+for (let i = 1;i <= blocksRendered / 100;i++) {
+  var arrived = document.getElementById(`arrived${i}`);
+  arrived.setAttribute("data-number", `${i * 100}字`);
+}
+
+  </script>
+</body>
+</html>

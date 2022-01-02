@@ -1,0 +1,32 @@
+
+body {
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+
+.form {
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  padding: 10px;
+  margin-left: calc(100vw / 2 - 300px);
+  width: 100vw;
+  max-width: 600px;
+  margin-top: 20px;
+}
+
+@media screen and (max-width: 600px) {
+  .form {
+    margin-left: 0;
+  }
+}
+
+#content {
+  height: 200px;
+}
+
+.previewPage {
+  width: 100%;
+  margin-top: 10px;
+  height: 650px;
+}

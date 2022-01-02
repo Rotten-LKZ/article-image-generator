@@ -1,0 +1,112 @@
+
+@font-face {
+  font-family: 'alibaba';
+  src: url(./alibaba.OTF);
+}
+
+body {
+  background-color: white;
+  margin: 0;
+  overflow-y: hidden;
+  overflow-x: auto;
+  width: auto;
+  /* height: ; */
+}
+
+.root {
+  position: relative;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.column {
+  display: inline-block;
+  margin-left: 5px;
+  border: 1px solid black;
+}
+
+.row {
+  margin: 5px;
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.block {
+  overflow: visible;
+  vertical-align: top;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border: 1px solid black;
+  text-align: center;
+  font-family: 'alibaba';
+  font-size: 18px;
+  position: relative;
+}
+
+.stopSign::after {
+  content: "、";
+}
+
+.ellipsis::after {
+  content: "…";
+}
+
+.comma::after {
+  content: "，";
+}
+
+.period::after {
+  content: "。";
+}
+
+.exMark::after {
+  content: "！";
+}
+
+.quMark::after {
+  content: "？";
+}
+
+.colon::after {
+  content: "：";
+}
+
+
+.quoLeftMark::after {
+  content: "“";
+  position: absolute;
+  right: 0;
+}
+
+.quoRightMark::after {
+  content: "”";
+  position: absolute;
+  right: -3px;
+}
+
+.seMark::after {
+  content: "；";
+}
+
+.arrived::after {
+  content: attr(data-number);
+  font-size: 6px;
+  z-index: 100;
+  position: absolute;
+  bottom: -7.5px;
+  left: 2px;
+}
+
+.siQuoRightMark::after {
+  content: "’";
+  position: absolute;
+  right: -3px;
+}
+
+.lines {
+  position: absolute;
+  box-sizing: border-box;
+  height: 5px;
+  background-color: blue;
+}
