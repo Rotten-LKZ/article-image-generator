@@ -5,12 +5,13 @@ row = 20;
 text = "";
 line = [[1, 6, 9, 17], [6, 9, 17], [6, 8, 13]];
 
-let generate = document.getElementById("generate");
+let generatePNG = document.getElementById("generatePNG");
+let generatePDF = document.getElementById("generatePDF");
 let preview = document.getElementById("preview");
 let addLine = document.getElementById("addLine");
 let viewLine = document.getElementById("viewLine");
 
-generate.onclick = function (e) {
+generatePNG.onclick = function (e) {
   e.preventDefault();
   const blockInput = document.getElementById("blockInput").value;
   const columnInput = document.getElementById("columnInput").value;
@@ -21,7 +22,7 @@ generate.onclick = function (e) {
     return;
   }
 
-  generate.className = "btn btn-primary disabled";
+  generatePNG.className = "btn btn-default disabled";
 
   const details = {
     block: parseInt(blockInput),
@@ -64,7 +65,66 @@ generate.onclick = function (e) {
       link.remove();
     }, 1000);
   }).finally(function() {
-    generate.className = "btn btn-primary";
+    generatePNG.className = "btn btn-default";
+  });
+};
+
+generatePDF.onclick = function (e) {
+  e.preventDefault();
+  const blockInput = document.getElementById("blockInput").value;
+  const columnInput = document.getElementById("columnInput").value;
+  const rowInput = document.getElementById("rowInput").value;
+  const textInput = document.getElementById("content").value;
+  if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
+    swal("错误", "所有输入框均不为空", "error");
+    return;
+  }
+
+  generatePDF.className = "btn btn-default disabled";
+
+  const details = {
+    block: parseInt(blockInput),
+    column: parseInt(columnInput),
+    row: parseInt(rowInput),
+    content: textInput,
+    lineStr: JSON.stringify(line),
+    pdf: true
+  };
+
+  
+  let formBody = [];
+  for (let property in details) {
+    let encodedKey = encodeURIComponent(property);
+    let encodedValue = encodeURIComponent(details[property]);
+    formBody.push(encodedKey + "=" + encodedValue);
+  }
+  formBody = formBody.join("&");
+
+  const req = new Request("https://server.pyusr.com/api/composition", {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
+    },
+    body: formBody
+  });
+  fetch(req).then(function (response) {
+    if (response.status < 200 && response.status >= 300) {
+      swal("错误", "生成 PDF 失败", "error");
+      return;
+    }
+    return response.text();
+  }).then(function (data) {
+    const link = document.createElement('a');
+    swal("成功", `生成 PDF 成功\n地址：${data}`, "success");
+    window.setTimeout(function () {
+      link.href = data;
+      link.setAttribute('target', '_blank');
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    }, 1000);
+  }).finally(function() {
+    generatePDF.className = "btn btn-default";
   });
 };
 
