@@ -160,3 +160,4 @@ for (let i = 0;i < line.length;i++) {
     currentColumn.innerHTML += `<span class="lines" style="width: ${block * 26 + 10}px;top: ${31 * line[i][j]}px;"></span>`;
   }
 }
+root.innerHTML += `<span id="renderedComplete" style="display: none;"></span>`

@@ -162,11 +162,8 @@ addLine.onclick = function (e) {
     swal("错误", "格式错误", "error");
     return;
   }
-  console.log(linePlace)
   for (let i = 0;i < line.length;i++) {
     for (let j = 0;j < line[i].length;j++) {
-      console.log(i + 1, line[i][j]);
-      console.log(linePlace[0] === i + 1 && linePlace[1] === line[i][j])
       if (linePlace[0] === i + 1 && linePlace[1] === line[i][j]) {
         line[i].splice(j, 1);
         swal("成功", "删除成功", "success");
@@ -175,6 +172,9 @@ addLine.onclick = function (e) {
     }
   }
 
+  if (line[linePlace[0] - 1] === undefined) {
+    line[linePlace[0] - 1] = [];
+  }
   line[linePlace[0] - 1].push(linePlace[1]);
   swal("成功", "添加成功", "success");
 }
