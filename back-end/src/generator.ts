@@ -49,14 +49,13 @@ async function generator(request: Request, response: Response) {
   try {
     JSON.parse(lineStr);
   } catch {
-    fail(response, "请求格式错误", 400);
+    fail(response, "请求格式错误", 400)();
     HANDLING_NUMBER--;
     return;
   }
 
   if (isNaN(parseInt(block)) || isNaN(parseInt(column)) || isNaN(parseInt(row))) {
-    response.status(400);
-    fail(response, "请求格式错误", 400);
+    fail(response, "请求格式错误", 400)();
     HANDLING_NUMBER--;
     return;
   }

@@ -13,74 +13,29 @@ let viewLine = document.getElementById("viewLine");
 
 generatePNG.onclick = function (e) {
   e.preventDefault();
-  const blockInput = document.getElementById("blockInput").value;
-  const columnInput = document.getElementById("columnInput").value;
-  const rowInput = document.getElementById("rowInput").value;
-  const textInput = document.getElementById("content").value;
-  if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
-    swal("错误", "所有输入框均不为空", "error");
-    return;
-  }
-
-  generatePNG.className = "btn btn-default disabled";
-
-  const details = {
-    block: parseInt(blockInput),
-    column: parseInt(columnInput),
-    row: parseInt(rowInput),
-    content: textInput,
-    lineStr: JSON.stringify(line)
-  };
-
-  
-  let formBody = [];
-  for (let property in details) {
-    let encodedKey = encodeURIComponent(property);
-    let encodedValue = encodeURIComponent(details[property]);
-    formBody.push(encodedKey + "=" + encodedValue);
-  }
-  formBody = formBody.join("&");
-
-  const req = new Request("https://server.pyusr.com/api/composition", {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    body: formBody
-  });
-  fetch(req).then(function (response) {
-    if (response.status < 200 && response.status >= 300) {
-      swal("错误", "生成图片失败", "error");
-      return;
-    }
-    return response.text();
-  }).then(function (data) {
-    const link = document.createElement('a');
-    swal("成功", `生成图片成功\n地址：${data}`, "success");
-    window.setTimeout(function () {
-      link.href = data;
-      link.setAttribute('target', '_blank');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }, 1000);
-  }).finally(function() {
-    generatePNG.className = "btn btn-default";
-  });
+  generate(false);
 };
 
 generatePDF.onclick = function (e) {
   e.preventDefault();
+  generate(true);
+};
+
+function generate(isPdf) {
   const blockInput = document.getElementById("blockInput").value;
   const columnInput = document.getElementById("columnInput").value;
   const rowInput = document.getElementById("rowInput").value;
   const textInput = document.getElementById("content").value;
-  if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
-    swal("错误", "所有输入框均不为空", "error");
-    return;
-  }
+  // if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
+  //   swal("错误", "请输入数字", "error");
+  //   return;
+  // }
 
-  generatePDF.className = "btn btn-default disabled";
+  if (isPdf) {
+    generatePDF.className = "btn btn-default disabled";
+  } else {
+    generatePNG.className = "btn btn-default disabled";
+  }
 
   const details = {
     block: parseInt(blockInput),
@@ -88,7 +43,7 @@ generatePDF.onclick = function (e) {
     row: parseInt(rowInput),
     content: textInput,
     lineStr: JSON.stringify(line),
-    pdf: true
+    pdf: isPdf
   };
 
   
@@ -109,11 +64,19 @@ generatePDF.onclick = function (e) {
   });
   fetch(req).then(function (response) {
     if (response.status < 200 && response.status >= 300) {
-      swal("错误", "生成 PDF 失败", "error");
+      console.log(response.status);
+      if (response.status === 403) {
+        swal("错误", "请求人数过多，请稍后重试", "error");
+      } else if (response.status === 400) {
+        swal("错误", "请求格式错误", "error");
+      } else {
+        swal("错误", "生成图片失败", "error");
+      }
       return;
     }
     return response.text();
-  }).then(function (data) {
+  })
+  .then(function (data) {
     const link = document.createElement('a');
     swal("成功", `生成 PDF 成功\n地址：${data}`, "success");
     window.setTimeout(function () {
@@ -123,10 +86,15 @@ generatePDF.onclick = function (e) {
       link.click();
       link.remove();
     }, 1000);
-  }).finally(function() {
-    generatePDF.className = "btn btn-default";
+  })
+  .finally(function() {
+    if (isPdf) {
+      generatePDF.className = "btn btn-default";
+    } else {
+      generatePNG.className = "btn btn-default";
+    }
   });
-};
+}
 
 preview.onclick = function (e) {
   e.preventDefault();
@@ -135,7 +103,7 @@ preview.onclick = function (e) {
   const rowInput = document.getElementById("rowInput").value;
   const textInput = document.getElementById("content").value;
   if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
-    swal("错误", "所有输入框均不为空", "error");
+    swal("错误", "请输入数字", "error");
     return;
   }
   block = blockInput;
