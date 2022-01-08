@@ -44,7 +44,7 @@ function handle() {
 }
 
 async function generator(request: Request, response: Response) {
-  const { content, block, column, row, lineStr, pdf } = request.body;
+  const { content, block, column, row, lineStr, pdf, test } = request.body;
   const now = new Date();
   try {
     JSON.parse(lineStr);
@@ -62,7 +62,9 @@ async function generator(request: Request, response: Response) {
 
   fs.writeFileSync(path.resolve(__dirname, '../static', 'html', 'config.js'), 
   `const block = ${block};const column = ${column};const row = ${row};const text = "${content.replace(/\n/g, "\\n")}";const line = ${lineStr};`);
-  fs.writeFileSync(path.resolve(__dirname, "../static", "txt", `${now.getTime()}.txt`), content);
+  if (test === undefined) {
+    fs.writeFileSync(path.resolve(__dirname, "../static", "txt", `${now.getTime()}.txt`), content);
+  }
 
   let tmp = Math.floor(Math.random() * MAX_WSE);
   const browser = await puppeteer.connect({ browserWSEndpoint: WSE_LIST[tmp] });
@@ -80,7 +82,7 @@ async function generator(request: Request, response: Response) {
       format: 'a4', 
       printBackground: true, 
       preferCSSPageSize: false,
-      margin: {top: '10mm', left: '10mm', right: '10mm', bottom: '10mm'},
+      margin: {top: '22mm', left: '10mm', right: '10mm', bottom: '10mm'},
       landscape: true
     });
     await page.close();

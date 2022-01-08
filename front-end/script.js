@@ -26,27 +26,34 @@ function generate(isPdf) {
   const columnInput = document.getElementById("columnInput").value;
   const rowInput = document.getElementById("rowInput").value;
   const textInput = document.getElementById("content").value;
-  // if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
-  //   swal("错误", "请输入数字", "error");
-  //   return;
-  // }
+  if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
+    swal("错误", "请输入数字", "error");
+    return;
+  }
+
+  let details = {};
 
   if (isPdf) {
+    details = {
+      block: parseInt(blockInput),
+      column: parseInt(columnInput),
+      row: parseInt(rowInput),
+      content: textInput,
+      lineStr: JSON.stringify(line),
+      pdf: true
+    };
     generatePDF.className = "btn btn-default disabled";
   } else {
+    details = {
+      block: parseInt(blockInput),
+      column: parseInt(columnInput),
+      row: parseInt(rowInput),
+      content: textInput,
+      lineStr: JSON.stringify(line),
+    };
     generatePNG.className = "btn btn-default disabled";
   }
 
-  const details = {
-    block: parseInt(blockInput),
-    column: parseInt(columnInput),
-    row: parseInt(rowInput),
-    content: textInput,
-    lineStr: JSON.stringify(line),
-    pdf: isPdf
-  };
-
-  
   let formBody = [];
   for (let property in details) {
     let encodedKey = encodeURIComponent(property);
@@ -78,7 +85,7 @@ function generate(isPdf) {
   })
   .then(function (data) {
     const link = document.createElement('a');
-    swal("成功", `生成 PDF 成功\n地址：${data}`, "success");
+    swal("成功", `生成 ${isPdf ? "PDF" : "PNG"} 成功\n地址：${data}`, "success");
     window.setTimeout(function () {
       link.href = data;
       link.setAttribute('target', '_blank');
