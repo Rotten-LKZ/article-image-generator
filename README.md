@@ -7,7 +7,17 @@
 
 [在线示例](https://ch.lkzstudio.com/composition/)
 
-## 目录介绍
+## ✔特性（不是bug）
+
+- 部署简单方便（不）
+- JavaScript + css 渲染。理论上无限放大的画质
+- 容我再想想……
+
+## 💔TODO
+
+- [] 引号、书名号、括号等标点符号避头尾处理
+
+## 👓目录介绍
 
 static 目录下是对应使用的字体（阿里巴巴），本来在 generator 文件夹和 front-end/com 文件夹需要引用
 
@@ -17,13 +27,13 @@ front-end 生成器前端代码（[在线示例](https://ch.lkzstudio.com/compos
 
 back-end 生成器后端代码（图片生成在后端生成，前端预览就是用 iframe 显示出 html）
 
-## 使用说明
+## 🥽使用说明
 
-#### 部署
+#### 👓部署
 
 后端部署到后端，前端部署到前端即可。
 
-#### 生成器说明
+#### 👓生成器说明
 
 在 generator/script.js 中前五个变量分别对应为：
 
