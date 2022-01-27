@@ -1,6 +1,64 @@
 # article-image-generator
-答题卡作文图片生成器
 
+## English
+## Brief introduction
+
+As the title shows, this project can convert articles into the form of answer sheet.
+
+[Example](https://ch.lkzstudio.com/composition/)
+
+## ✔Features (No bugs)
+
+- It can be simply to deploy in your server
+- Rendered by JavaScript + css. Theoretically, the image quality can be very good
+- Let me think about more...
+
+## 💔TODO
+
+- [ ] Punctuation marks such as quotation marks, book names and brackets shall be avoided from the beginning and end
+- [ ] Support other languages
+
+## 👓Introduction of folders
+
+static This folder is the font(Alibaba Puhuiti) this project is using. It needs to be referenced in the `generator` folder and the `front-end/com` folder
+
+generator This project is made of html、css、JavaScript. This folder can convert articles into the form of answer sheet.
+
+front-end The code of front-end([Example](https://ch.lkzstudio.com/composition/))
+
+back-end The code of back-end(Images are generated from back-end. Previews in front-end is using `iframe`.)
+
+## 🥽How to use
+
+#### 👓Explanation of the generator
+
+In file `generator/script.js`, the first five variables are
+
+- block: How many blocks in a line
+- column: How many columns
+- row: How many rows in a column
+- line: Where should lines shows
+- text: The article(Splited by `\n`. The first line is the title of an article.)
+
+![Example of setting variables](https://s4.ax1x.com/2022/01/02/TTp4G8.png)
+
+## Examples
+
+![Example of a generated image](https://s4.ax1x.com/2022/01/02/TTSFX9.png)
+
+## Updated log
+
+The last updated time：2021-01-27
+
+file `README.md`
+
+## License
+
+This project is using [MIT](https://choosealicense.com/licenses/mit/) license.
+
+If you are using the project, I hope you can mark the link of this repo and the original author's name.
+
+## 简体中文
 ## 简介
 
 如标题所见，这个项目可以将电子稿的作文转换成答题卡方格纸一样的形式
@@ -16,10 +74,11 @@
 ## 💔TODO
 
 - [ ] 引号、书名号、括号等标点符号避头尾处理
+- [ ] 支持其他语言
 
 ## 👓目录介绍
 
-static 目录下是对应使用的字体（阿里巴巴），本来在 generator 文件夹和 front-end/com 文件夹需要引用
+static 目录下是对应使用的字体（阿里巴巴普惠体），本来在 `generator` 文件夹和 `front-end/com` 文件夹需要引用
 
 generator 此项目使用前端三件套（html、css、JavaScript）制作。此目录仅为生成 html 文件的文件夹
 
@@ -35,7 +94,7 @@ back-end 生成器后端代码（图片生成在后端生成，前端预览就�
 
 #### 👓生成器说明
 
-在 generator/script.js 中前五个变量分别对应为：
+在 `generator/script.js` 中前五个变量分别对应为：
 
 - block：一行有多少格
 - column：有多少栏
@@ -47,15 +106,15 @@ back-end 生成器后端代码（图片生成在后端生成，前端预览就�
 
 ## 样例
 
-![图片显示](https://s4.ax1x.com/2022/01/02/TTSFX9.png)
+![图片样例](https://s4.ax1x.com/2022/01/02/TTSFX9.png)
 
 注：虽然有日文示例，但本程序暂且主要为中文作文所制作并优化，故日文生成可能在标点符号等排版上不符合规范。
 
 ## 更新日志
 
-最近更新：2021-01-07
+最近更新：2021-01-27
 
-本项目 updates.md 文件
+本项目 `updates.md` 文件
 
 ## 协议
 
