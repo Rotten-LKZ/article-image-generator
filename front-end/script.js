@@ -5,11 +5,28 @@ row = 20;
 text = "";
 line = [[1, 6, 9, 17], [6, 9, 17], [6, 8, 13]];
 
+if (window.localStorage) {
+  let config = window.localStorage.getItem("config");
+  if (config !== null && config !== undefined) {
+    config = JSON.parse(config);
+    document.getElementById("blockInput").value = config.block;
+    document.getElementById("columnInput").value = config.column;
+    document.getElementById("rowInput").value = config.row;
+    block = config.block;
+    column = config.column;
+    row = config.row;
+    line = config.line;
+  }
+}
+
 let generatePNG = document.getElementById("generatePNG");
 let generatePDF = document.getElementById("generatePDF");
 let preview = document.getElementById("preview");
 let addLine = document.getElementById("addLine");
 let viewLine = document.getElementById("viewLine");
+let saveConfig = document.getElementById("saveConfig");
+let deleteConfig = document.getElementById("deleteConfig");
+let optimization = document.getElementById("optimization");
 
 generatePNG.onclick = function (e) {
   e.preventDefault();
@@ -172,3 +189,42 @@ deleteAllLines.onclick = function (e) {
   swal("成功", "已删除全部横线", "success");
 }
 
+saveConfig.onclick = function(e) {
+  e.preventDefault();
+  if (window.localStorage) {
+    const blockInput = document.getElementById("blockInput").value;
+    const columnInput = document.getElementById("columnInput").value;
+    const rowInput = document.getElementById("rowInput").value;
+    if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
+      swal("错误", "请输入数字", "error");
+      return;
+    }
+    window.localStorage.setItem("config", JSON.stringify({
+      block: blockInput,
+      column: columnInput,
+      row: rowInput,
+      line: line,
+    }));
+    swal("成功", "已保存配置", "success");
+  } else {
+    swal("错误", "您使用的浏览器不支持本地存储", "error");
+  }
+}
+
+deleteConfig.onclick = function(e) {
+  e.preventDefault();
+  if (window.localStorage) {
+    window.localStorage.clear();
+    swal("成功", "已删除配置", "success");
+  } else {
+    swal("错误", "您使用的浏览器不支持本地存储", "error");
+  }
+}
+
+optimization.onclick = function(e) {
+  e.preventDefault();
+  let textInput = document.getElementById("content").value;
+  textInput = textInput.replace(/ /g, "");
+  textInput = textInput.replace(/\.\.\./g, "…");
+  document.getElementById("content").value = textInput;
+}
