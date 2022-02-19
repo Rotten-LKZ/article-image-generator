@@ -19,6 +19,26 @@ if (window.localStorage) {
   }
 }
 
+/**
+ * @returns 如果为 false 则不符合规范，将自动弹出提示框
+ */
+function getInput() {
+  const blockInput = document.getElementById("blockInput").value;
+  const columnInput = document.getElementById("columnInput").value;
+  const rowInput = document.getElementById("rowInput").value;
+  const textInput = document.getElementById("content").value;
+  if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
+    swal("错误", "请输入数字", "error");
+    return false;
+  }
+  return {
+    blockInput: parseInt(blockInput),
+    columnInput: parseInt(columnInput),
+    rowInput: parseInt(rowInput),
+    textInput: textInput,
+  };
+}
+
 let generatePNG = document.getElementById("generatePNG");
 let generatePDF = document.getElementById("generatePDF");
 let preview = document.getElementById("preview");
@@ -39,12 +59,8 @@ generatePDF.onclick = function (e) {
 };
 
 function generate(isPdf) {
-  const blockInput = document.getElementById("blockInput").value;
-  const columnInput = document.getElementById("columnInput").value;
-  const rowInput = document.getElementById("rowInput").value;
-  const textInput = document.getElementById("content").value;
-  if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
-    swal("错误", "请输入数字", "error");
+  const input = getInput();
+  if (input === false) {
     return;
   }
 
@@ -52,20 +68,20 @@ function generate(isPdf) {
 
   if (isPdf) {
     details = {
-      block: parseInt(blockInput),
-      column: parseInt(columnInput),
-      row: parseInt(rowInput),
-      content: textInput,
+      block: input.blockInput,
+      column: input.columnInput,
+      row: input.rowInput,
+      content: input.textInput,
       lineStr: JSON.stringify(line),
       pdf: true
     };
     generatePDF.className = "btn btn-default disabled";
   } else {
     details = {
-      block: parseInt(blockInput),
-      column: parseInt(columnInput),
-      row: parseInt(rowInput),
-      content: textInput,
+      block: input.blockInput,
+      column: input.columnInput,
+      row: input.rowInput,
+      content: input.textInput,
       lineStr: JSON.stringify(line),
     };
     generatePNG.className = "btn btn-default disabled";
@@ -122,18 +138,14 @@ function generate(isPdf) {
 
 preview.onclick = function (e) {
   e.preventDefault();
-  const blockInput = document.getElementById("blockInput").value;
-  const columnInput = document.getElementById("columnInput").value;
-  const rowInput = document.getElementById("rowInput").value;
-  const textInput = document.getElementById("content").value;
-  if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
-    swal("错误", "请输入数字", "error");
+  const input = getInput();
+  if (input === false) {
     return;
   }
-  block = blockInput;
-  column = columnInput;
-  row = rowInput;
-  text = textInput;
+  block = input.blockInput;
+  column = input.columnInput;
+  row = input.rowInput;
+  text = input.textInput;
   const previewPage = document.getElementById("previewPage");
   previewPage.contentWindow.location.reload();
   previewPage.setAttribute("style", `height: ${31 * parseInt(row) + 7}px`);
@@ -192,17 +204,14 @@ deleteAllLines.onclick = function (e) {
 saveConfig.onclick = function(e) {
   e.preventDefault();
   if (window.localStorage) {
-    const blockInput = document.getElementById("blockInput").value;
-    const columnInput = document.getElementById("columnInput").value;
-    const rowInput = document.getElementById("rowInput").value;
-    if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
-      swal("错误", "请输入数字", "error");
+    const input = getInput();
+    if (input === false) {
       return;
     }
     window.localStorage.setItem("config", JSON.stringify({
-      block: blockInput,
-      column: columnInput,
-      row: rowInput,
+      block: input.blockInput,
+      column: input.columnInput,
+      row: input.rowInput,
       line: line,
     }));
     swal("成功", "已保存配置", "success");
