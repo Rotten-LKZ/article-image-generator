@@ -161,3 +161,5 @@ for (let i = 0;i < line.length;i++) {
   }
 }
 root.innerHTML += `<span id="renderedComplete" style="display: none;"></span>`
+
+window.parent.updateIframeHeight(document.getElementsByTagName("body")[0].clientHeight);

@@ -91,11 +91,14 @@ body {
 
 .arrived::after {
   content: attr(data-number);
-  font-size: 6px;
+  transform: scale(0.4);
+  white-space: nowrap;
+  font-size: 18px;
   z-index: 100;
   position: absolute;
-  bottom: -7.5px;
-  left: 2px;
+  bottom: -15px;
+  left: -16px;
+  user-select: none;
 }
 
 .siQuoRightMark::after {

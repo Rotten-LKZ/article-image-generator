@@ -41,6 +41,10 @@ function getInput() {
   };
 }
 
+function updateIframeHeight(height) {
+  document.getElementById("previewPage").setAttribute("style", `height: ${height}px`);
+}
+
 let generatePNG = document.getElementById("generatePNG");
 let generatePDF = document.getElementById("generatePDF");
 let preview = document.getElementById("preview");
@@ -148,9 +152,7 @@ preview.onclick = function (e) {
   column = input.columnInput;
   row = input.rowInput;
   text = input.textInput;
-  const previewPage = document.getElementById("previewPage");
-  previewPage.contentWindow.location.reload();
-  previewPage.setAttribute("style", `height: ${31 * parseInt(row) + 7}px`);
+  document.getElementById("previewPage").contentWindow.location.reload();
 
   swal("成功", "预览窗口已重新渲染", "success");
 };

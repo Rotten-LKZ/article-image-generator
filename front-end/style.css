@@ -28,5 +28,5 @@ body {
 .previewPage {
   width: 100%;
   margin-top: 10px;
-  height: 650px;
+  height: auto;
 }
