@@ -94,7 +94,7 @@ function getPunctuationName(str) {
   return punctuations[str] === undefined ? "" : punctuations[str];
 }
 function isPunctuation(str) {
-  console.log(str)
+  // console.log(str)
   var punctuations = ["、", "……", "，", "。", "！", "？", "：", "；", "’", "”"];
   for (let i = 0;i < punctuations.length;i++) {
     if (str.includes(punctuations[i])) {
