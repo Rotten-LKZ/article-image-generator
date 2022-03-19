@@ -9,15 +9,17 @@ if (window.localStorage) {
   let config = window.localStorage.getItem("config");
   if (config !== null && config !== undefined) {
     config = JSON.parse(config);
-    document.getElementById("blockInput").value = config.block;
-    document.getElementById("columnInput").value = config.column;
-    document.getElementById("rowInput").value = config.row;
     block = config.block;
     column = config.column;
     row = config.row;
     line = config.line;
   }
 }
+
+// init HTML values
+document.getElementById("blockInput").value = block;
+document.getElementById("columnInput").value = column;
+document.getElementById("rowInput").value = row;
 
 /**
  * @returns 如果为 false 则不符合规范，将自动弹出提示框
