@@ -14,6 +14,8 @@ body {
 }
 
 .root {
+  background-color: white;
+  width: auto;
   position: relative;
   display: flex;
   flex-wrap: nowrap;

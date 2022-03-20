@@ -7,6 +7,7 @@ line = [[1, 6, 9, 17], [6, 9, 17], [6, 8, 13]];
 
 if (window.localStorage) {
   let config = window.localStorage.getItem("config");
+  let content = window.localStorage.getItem("content");
   if (config !== null && config !== undefined) {
     config = JSON.parse(config);
     block = config.block;
@@ -14,12 +15,16 @@ if (window.localStorage) {
     row = config.row;
     line = config.line;
   }
+  if (content !== null && content !== undefined) {
+    text = content;
+  }
 }
 
 // init HTML values
 document.getElementById("blockInput").value = block;
 document.getElementById("columnInput").value = column;
 document.getElementById("rowInput").value = row;
+document.getElementById("content").value = text;
 
 /**
  * @returns 如果为 false 则不符合规范，将自动弹出提示框
@@ -53,6 +58,7 @@ let viewLine = document.getElementById("viewLine");
 let saveConfig = document.getElementById("saveConfig");
 let deleteConfig = document.getElementById("deleteConfig");
 let optimization = document.getElementById("optimization");
+let clearCache = document.getElementById("clearCache");
 
 generatePNG.onclick = function (e) {
   e.preventDefault();
@@ -65,81 +71,10 @@ generatePDF.onclick = function (e) {
 };
 
 function generate(isPdf) {
-  const input = getInput();
-  if (input === false) {
-    return;
-  }
-
-  let details = {};
-
-  if (isPdf) {
-    details = {
-      block: input.blockInput,
-      column: input.columnInput,
-      row: input.rowInput,
-      content: input.textInput,
-      lineStr: JSON.stringify(line),
-      pdf: true
-    };
-    generatePDF.className = "btn btn-default disabled";
-  } else {
-    details = {
-      block: input.blockInput,
-      column: input.columnInput,
-      row: input.rowInput,
-      content: input.textInput,
-      lineStr: JSON.stringify(line),
-    };
-    generatePNG.className = "btn btn-default disabled";
-  }
-
-  let formBody = [];
-  for (let property in details) {
-    let encodedKey = encodeURIComponent(property);
-    let encodedValue = encodeURIComponent(details[property]);
-    formBody.push(encodedKey + "=" + encodedValue);
-  }
-  formBody = formBody.join("&");
-
-  const req = new Request("https://server.pyusr.com/api/composition", {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8'
-    },
-    body: formBody
-  });
-  fetch(req).then(function (response) {
-    if (response.status < 200 && response.status >= 300) {
-      console.log(response.status);
-      if (response.status === 403) {
-        swal("错误", "请求人数过多，请稍后重试", "error");
-      } else if (response.status === 400) {
-        swal("错误", "请求格式错误", "error");
-      } else {
-        swal("错误", "生成图片失败", "error");
-      }
-      return;
-    }
-    return response.text();
-  })
-  .then(function (data) {
-    const link = document.createElement('a');
-    swal("成功", `生成 ${isPdf ? "PDF" : "PNG"} 成功\n地址：${data}`, "success");
-    window.setTimeout(function () {
-      link.href = data;
-      link.setAttribute('target', '_blank');
-      document.body.appendChild(link);
-      link.click();
-      link.remove();
-    }, 1000);
-  })
-  .finally(function() {
-    if (isPdf) {
-      generatePDF.className = "btn btn-default";
-    } else {
-      generatePNG.className = "btn btn-default";
-    }
-  });
+  window.open(
+    `./com/com.html?block=${block}&column=${column}&row=${row}&text=${text.replace(/\n/g, "\\n")}&line=${JSON.stringify(line)}&isPdf=${JSON.stringify(isPdf)}`, 
+    "_blank"
+  );
 }
 
 preview.onclick = function (e) {
@@ -240,4 +175,24 @@ optimization.onclick = function(e) {
   textInput = textInput.replace(/ /g, "");
   textInput = textInput.replace(/\.\.\./g, "…");
   document.getElementById("content").value = textInput;
+}
+
+clearCache.onclick = function(e) {
+  e.preventDefault();
+  if (window.localStorage) {
+    window.localStorage.removeItem("content");
+  }
+}
+
+document.getElementById("content").onblur = function(e) {
+  e.preventDefault();
+  if (window.localStorage) {
+    window.localStorage.setItem("content", document.getElementById("content").value);
+  }
+}
+
+window.onbeforeunload = function() {
+  if (window.localStorage) {
+    window.localStorage.setItem("content", document.getElementById("content").value);
+  }
 }

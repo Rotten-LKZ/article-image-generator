@@ -26,6 +26,7 @@
       <label for="content">文章主体</label>
       <textarea class="form-control" id="content" placeholder="文章主体"></textarea>
       <p class="help-block">第一行写标题（每段开头均不需要手动空格）</p>
+      <button type="button" class="btn btn-default" id="clearCache">清空缓存</button>
     </div>
     <div class="form-group">
       <label for="lineInput">线条</label>
@@ -48,7 +49,9 @@
       <button type="button" class="btn btn-default" id="generatePDF">生成 PDF</button>
       <p class="help-block">按下 Enter 键默认预览图片</p>
       <p class="help-block">生成 PDF 尺寸有限</p>
-      <p class="help-block">由于浏览器兼容性问题，预览效果中字数提示可能与生成效果略有差异</p>
+      <p class="help-block">由于各种各样的问题，不再提供后端生成图片和 PDF 文件（以后可能会再次支持）。</p>
+      <p class="help-block">故点击生成 PNG 将会在浏览器自动生成 PNG 文件；</p>
+      <p class="help-block">点击生成 PDF 将会在调用浏览器的打印功能，如果需要蓝色线条请找到选项中将背景图形勾选上。</p>
     </div>
   </form>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

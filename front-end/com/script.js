@@ -1,8 +1,32 @@
-const block = window.parent.block;
-const column = window.parent.column;
-const row = window.parent.row;
-const text = window.parent.text;
-const line = window.parent.line;
+
+let block = window.parent.block;
+let column = window.parent.column;
+let row = window.parent.row;
+let text = window.parent.text;
+let line = window.parent.line;
+let isQuery = false;
+let isPdf = false;
+
+if (text === undefined) {
+  block = parseInt(getQuery("block"));
+  column = parseInt(getQuery("column"));
+  row = parseInt(getQuery("row"));
+  text = getQuery("text").replace(/\\n/g, "\n");
+  line = JSON.parse(getQuery("line"));
+  isPdf = JSON.parse(getQuery("isPdf"));
+  isQuery = true;
+}
+
+function getQuery(key) {
+  var query = window.location.search.substring(1);
+  var map = query.split("&");
+  for (var i = 0; i < map.length; i++) {
+    var pair = map[i].split("=");
+    if (pair[0] == key) {
+      return decodeURI(pair[1]);
+    }
+  }
+}
 
 var root = document.querySelector("#root");
 var renderParas = [];
@@ -161,5 +185,22 @@ for (let i = 0;i < line.length;i++) {
   }
 }
 root.innerHTML += `<span id="renderedComplete" style="display: none;"></span>`
+root.setAttribute("style", `width: ${(26 * block + 17) * column + 5}px;`);
 
-window.parent.updateIframeHeight(document.getElementsByTagName("body")[0].clientHeight);
+if (!isQuery) {
+  window.parent.updateIframeHeight(document.getElementsByTagName("body")[0].clientHeight);
+} else {
+  if (isPdf) {
+    window.print();
+  } else {
+    domtoimage.toPng(document.getElementById("root")).then(function(dataUrl) {
+      download(dataUrl, `Title-${text.split("\n")[0]}.png`, "image/png");
+      var img = new Image();
+      img.src = dataUrl;
+      document.body.appendChild(img);
+      alert("已生成图片\n如果没有自动下载可以直接右键或者长按图片保存");
+    }).catch(function (error) {
+      alert('生成失败！', error);
+    });
+  }
+}
