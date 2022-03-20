@@ -199,6 +199,7 @@ if (!isQuery) {
       img.src = dataUrl;
       document.body.appendChild(img);
       alert("已生成图片\n如果没有自动下载可以直接右键或者长按图片保存");
+      document.getElementById("root").setAttribute("style", "display: none");
     }).catch(function (error) {
       alert('生成失败！', error);
     });
