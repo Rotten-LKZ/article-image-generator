@@ -71,6 +71,14 @@ generatePDF.onclick = function (e) {
 };
 
 function generate(isPdf) {
+  const input = getInput();
+  if (input === false) {
+    return;
+  }
+  block = input.blockInput;
+  column = input.columnInput;
+  row = input.rowInput;
+  text = input.textInput;
   window.open(
     `./com/com.html?block=${block}&column=${column}&row=${row}&text=${text.replace(/\n/g, "\\n")}&line=${JSON.stringify(line)}&isPdf=${JSON.stringify(isPdf)}`, 
     "_blank"
