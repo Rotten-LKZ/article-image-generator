@@ -1,9 +1,12 @@
-
 block = 16;
 column = 3;
 row = 22;
 text = "";
-line = [[1, 6, 9, 17], [6, 9, 17], [6, 8, 13]];
+line = [
+  [1, 6, 9, 17],
+  [6, 9, 17],
+  [6, 8, 13],
+];
 
 if (window.localStorage) {
   let config = window.localStorage.getItem("config");
@@ -34,7 +37,11 @@ function getInput() {
   const columnInput = document.getElementById("columnInput").value;
   const rowInput = document.getElementById("rowInput").value;
   const textInput = document.getElementById("content").value;
-  if (isNaN(parseInt(blockInput)) || isNaN(parseInt(columnInput)) || isNaN(parseInt(rowInput))) {
+  if (
+    isNaN(parseInt(blockInput)) ||
+    isNaN(parseInt(columnInput)) ||
+    isNaN(parseInt(rowInput))
+  ) {
     swal("错误", "请输入数字", "error");
     return false;
   }
@@ -47,7 +54,9 @@ function getInput() {
 }
 
 function updateIframeHeight(height) {
-  document.getElementById("previewPage").setAttribute("style", `height: ${height}px`);
+  document
+    .getElementById("previewPage")
+    .setAttribute("style", `height: ${height}px`);
 }
 
 let generatePNG = document.getElementById("generatePNG");
@@ -80,7 +89,10 @@ function generate(isPdf) {
   row = input.rowInput;
   text = input.textInput;
   window.open(
-    `./com/com.html?block=${block}&column=${column}&row=${row}&text=${text.replace(/\n/g, "\\n")}&line=${JSON.stringify(line)}&isPdf=${JSON.stringify(isPdf)}`, 
+    `./com/com.html?block=${block}&column=${column}&row=${row}&text=${text.replace(
+      /\n/g,
+      "\\n"
+    )}&line=${JSON.stringify(line)}&isPdf=${JSON.stringify(isPdf)}`,
     "_blank"
   );
 }
@@ -113,8 +125,8 @@ addLine.onclick = function (e) {
     swal("错误", "格式错误", "error");
     return;
   }
-  for (let i = 0;i < line.length;i++) {
-    for (let j = 0;j < line[i].length;j++) {
+  for (let i = 0; i < line.length; i++) {
+    for (let j = 0; j < line[i].length; j++) {
       if (linePlace[0] === i + 1 && linePlace[1] === line[i][j]) {
         line[i].splice(j, 1);
         swal("成功", "删除成功", "success");
@@ -128,46 +140,49 @@ addLine.onclick = function (e) {
   }
   line[linePlace[0] - 1].push(linePlace[1]);
   swal("成功", "添加成功", "success");
-}
+};
 
 viewLine.onclick = function (e) {
   e.preventDefault();
   let nowLines = "";
-  for (let i = 0;i < line.length;i++) {
-    for (let j = 0;j < line[i].length;j++) {
+  for (let i = 0; i < line.length; i++) {
+    for (let j = 0; j < line[i].length; j++) {
       nowLines += `${i + 1} ${line[i][j]}\n`;
     }
     nowLines += "\n";
   }
   swal(`已添加以下横线：\n${nowLines}`);
-}
+};
 
 deleteAllLines.onclick = function (e) {
   e.preventDefault();
   line = [];
   swal("成功", "已删除全部横线", "success");
-}
+};
 
-saveConfig.onclick = function(e) {
+saveConfig.onclick = function (e) {
   e.preventDefault();
   if (window.localStorage) {
     const input = getInput();
     if (input === false) {
       return;
     }
-    window.localStorage.setItem("config", JSON.stringify({
-      block: input.blockInput,
-      column: input.columnInput,
-      row: input.rowInput,
-      line: line,
-    }));
+    window.localStorage.setItem(
+      "config",
+      JSON.stringify({
+        block: input.blockInput,
+        column: input.columnInput,
+        row: input.rowInput,
+        line: line,
+      })
+    );
     swal("成功", "已保存配置", "success");
   } else {
     swal("错误", "您使用的浏览器不支持本地存储", "error");
   }
-}
+};
 
-deleteConfig.onclick = function(e) {
+deleteConfig.onclick = function (e) {
   e.preventDefault();
   if (window.localStorage) {
     window.localStorage.clear();
@@ -175,32 +190,38 @@ deleteConfig.onclick = function(e) {
   } else {
     swal("错误", "您使用的浏览器不支持本地存储", "error");
   }
-}
+};
 
-optimization.onclick = function(e) {
+optimization.onclick = function (e) {
   e.preventDefault();
   let textInput = document.getElementById("content").value;
   textInput = textInput.replace(/ /g, "");
   textInput = textInput.replace(/\.\.\./g, "…");
   document.getElementById("content").value = textInput;
-}
+};
 
-clearCache.onclick = function(e) {
+clearCache.onclick = function (e) {
   e.preventDefault();
   if (window.localStorage) {
     window.localStorage.removeItem("content");
   }
-}
+};
 
-document.getElementById("content").onblur = function(e) {
+document.getElementById("content").onblur = function (e) {
   e.preventDefault();
   if (window.localStorage) {
-    window.localStorage.setItem("content", document.getElementById("content").value);
+    window.localStorage.setItem(
+      "content",
+      document.getElementById("content").value
+    );
   }
-}
+};
 
-window.onbeforeunload = function() {
+window.onbeforeunload = function () {
   if (window.localStorage) {
-    window.localStorage.setItem("content", document.getElementById("content").value);
+    window.localStorage.setItem(
+      "content",
+      document.getElementById("content").value
+    );
   }
-}
+};
