@@ -28,6 +28,7 @@
       <p class="help-block">第一行写标题（每段开头均不需要手动空格）</p>
       <button type="button" class="btn btn-default" id="clearCache">清空缓存</button>
     </div>
+    <hr />
     <div class="form-group">
       <label for="lineInput">线条</label>
       <input class="form-control" id="lineInput" placeholder="例如：1 1"><br/>
@@ -36,9 +37,22 @@
       <button type="button" class="btn btn-default" id="deleteAllLines">删除全部</button>
       <p class="help-block">格式：列数 第几行下放添加横线（如果已经有的话则为删除）</p>
     </div>
-    <div class="form-group">
+    <hr />
+    <!-- <div class="form-group">
+      <div class="form-inline">
+        <label for="startBlock">开始格子</label>
+        <input class="form-control" id="startBlock" type="text" placeholder="行 列">
+        <label for="endBlock">结束格子</label>
+        <input class="form-control" id="endBlock" type="text" placeholder="行 列">
+      </div>
+      <label for="selectColor">颜色选择</label>
+      <input type="color" id="selectColor" class="form-control"><br/>
+      <button type="button" class="btn btn-primary" id="addColor">增加颜色</button>
+      <button type="button" class="btn btn-danger" id="removeColor">删除颜色</button><br/> -->
+
       <div class="btn btn-default" id="optimization">优化文章</div>
       <p class="help-block">优化文章：删除文章所有空格并且自动替换“...”为“…”</p>
+      <hr />
       <div class="btn btn-primary" id="saveConfig">保存配置</div>
       <div class="btn btn-danger" id="deleteConfig">删除配置</div>
       <p class="help-block">配置包括格子数、行数、栏目数、线条位置，配置将存在您的浏览器中</p>
@@ -52,7 +66,7 @@
       <p class="help-block">由于各种各样的问题，不再提供后端生成图片和 PDF 文件（以后可能会再次支持）。</p>
       <p class="help-block">推荐使用电脑并使用最新版 Edge 或者 Chrome 进行操作。</p>
       <p class="help-block">故点击生成 PNG 将会在浏览器自动生成 PNG 文件；</p>
-      <p class="help-block">点击生成 PDF 将会在调用浏览器的打印功能，如果需要蓝色线条请找到选项中将背景图形勾选上。（手机可能无此功能）</p>
+      <p class="help-block">点击生成 PDF 将会在调用浏览器的打印功能，部分设备可以设置输出成 PDF 的打印机。</p>
     </div>
   </form>
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>

@@ -112,6 +112,5 @@ body {
 .lines {
   position: absolute;
   box-sizing: border-box;
-  height: 5px;
-  background-color: blue;
+  z-index: 10;
 }

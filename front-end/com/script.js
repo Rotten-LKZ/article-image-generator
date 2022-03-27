@@ -188,13 +188,28 @@ for (let i = 1; i <= blocksRendered / 100; i++) {
 for (let i = 0; i < line.length; i++) {
   for (let j = 0; j < line[i].length; j++) {
     var currentColumn = document.getElementById(`column${i + 1}`);
-    currentColumn.innerHTML += `<span class="lines" style="width: ${
-      block * 26 + 10
-    }px;top: ${31 * line[i][j]}px;"></span>`;
+    // currentColumn.innerHTML += `<span class="lines" style="width: ${
+    //   block * 26 + 10
+    // }px;top: ${31 * line[i][j]}px;"></span>`;
+
+    const canvas = document.createElement("canvas");
+    canvas.className = "lines";
+    canvas.setAttribute("style", `top: ${31 * line[i][j]}px;`);
+    canvas.width = block * 26 + 10;
+    canvas.height = 5;
+    currentColumn.innerHTML += canvas.outerHTML;
   }
 }
 root.innerHTML += `<span id="renderedComplete" style="display: none;"></span>`;
 root.setAttribute("style", `width: ${(26 * block + 17) * column + 5}px;`);
+
+let canvasElems = document.getElementsByTagName("canvas");
+for (const elem of canvasElems) {
+  console.log(elem.width, elem.height);
+  const ctx = elem.getContext("2d");
+  ctx.fillStyle = "blue";
+  ctx.fillRect(0, 0, elem.width, elem.height);
+}
 
 if (!isQuery) {
   window.parent.updateIframeHeight(
